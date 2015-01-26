@@ -1,3 +1,8 @@
+/**
+ *  Aeon Smart Energy Switch with Cost
+ *
+ * Reference from Aeon_HEMv2.groovy by Barry A. Burke "https://github.com/SANdood/Aeon-HEM-v2"
+ */
 metadata {
 	// Automatically generated. Make future change here.
 	definition (name: "Aeon Smart Energy Switch w/Cost", author: "Mike") {
