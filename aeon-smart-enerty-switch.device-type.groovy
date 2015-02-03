@@ -72,15 +72,14 @@ metadata {
 }
 
 def parse(String description) {
-	def result = null
-	def cmd = zwave.parse(description, [0x31: 1, 0x32: 1, 0x60: 3])
-	if (cmd) {
-		result = createEvent(zwaveEvent(cmd))
-	}
-	if (result) { 
-		return result
-    } else {
-	}
+    def result = null
+    def cmd = zwave.parse(description, [0x31: 1, 0x32: 1, 0x60: 3])
+    if (cmd) {
+        result = createEvent(zwaveEvent(cmd))
+    }
+    if (result) { 
+        return result
+    }
 }
 
 
