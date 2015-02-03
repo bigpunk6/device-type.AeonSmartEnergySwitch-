@@ -72,14 +72,12 @@ metadata {
 }
 
 def parse(String description) {
-    log.debug "Parse received ${description}"
 	def result = null
 	def cmd = zwave.parse(description, [0x31: 1, 0x32: 1, 0x60: 3])
 	if (cmd) {
 		result = createEvent(zwaveEvent(cmd))
 	}
 	if (result) { 
-		log.debug "Parse returned ${result?.descriptionText}"
 		return result
     } else {
 	}
@@ -87,7 +85,6 @@ def parse(String description) {
 
 
 def zwaveEvent(physicalgraph.zwave.commands.meterv1.MeterReport cmd) {
-    log.debug cmd
     def dispValue
     def newValue
     def formattedValue
@@ -103,10 +100,7 @@ def zwaveEvent(physicalgraph.zwave.commands.meterv1.MeterReport cmd) {
                 state.energyValue = newValue
                 BigDecimal costDecimal = newValue * ( kWhCost as BigDecimal )
                 def costDisplay = String.format("%5.2f",costDecimal)
-                log.debug costDisplay
                 state.costDisp = "Cost\n\$"+costDisplay
-                log.debug costDisp
-                log.debug state.costDisp
                 sendEvent(name: "energyCost", value: state.costDisp, unit: "", descriptionText: "Display Cost: ${costDisplay}")
                 sendEvent(name: "energy", value: newValue, unit: "kWh", descriptionText: "Total Energy: ${formattedValue} kWh")
             }
@@ -189,6 +183,5 @@ def configure() {
 		zwave.configurationV1.configurationSet(parameterNumber: 103, size: 4, scaledConfigurationValue: 0).format(),    // no third report
 		zwave.configurationV1.configurationSet(parameterNumber: 113, size: 4, scaledConfigurationValue: 300).format() // every 5 min
 	])
-	log.debug cmd
 	cmd
 }
